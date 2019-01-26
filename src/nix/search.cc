@@ -163,6 +163,7 @@ struct CmdSearch : SourceExprCommand, MixJSON
                     }
 
                     if (found == res.size()) {
+			// output in json format
                         if (json) {
 
                             auto jsonElem = jsonOut->object(attrPath);
@@ -276,7 +277,8 @@ struct CmdSearch : SourceExprCommand, MixJSON
                 throw SysError("cannot rename '%s' to '%s'", tmpFile, jsonCacheFileName);
         }
 
-        if (results.size() == 0)
+	// json uses jsonElem instead of results but that's not in this scope
+        if (!json && (results.size() == 0))
             throw Error("no results for the given search term(s)!");
 
         for (auto el : results) std::cout << el.second << "\n";
